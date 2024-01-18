@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="PT-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="updated_cartao.css">
+    <title>Document</title>
+</head>
+<body>
+    <!-- <div id="printCount" style="text-align: center; margin-top: 10px;">Contagem de Impressões: 0</div> -->
+    <div class="wrapper">
+        <div class="card-switch">
+            <label class="switch">
+               <input type="checkbox" class="toggle">
+               <span class="slider"></span>
+               <span class="card-side"></span>
+               <div class="flip-card__inner">
+                  <div class="flip-card__front">
+                     <div class="title">Crachá</div>
+                     <form class="flip-card__form" action="">
+                        <input class="flip-card__input" name="nome" placeholder="Nome" type="name">
+                        <input class="flip-card__input" name="Cargo" placeholder="Cargo" type="text" id="Cargo">
+                        <div class="button" data-tooltip="Size: 20Mb">
+                          <div class="button-wrapper">
+                            <div class="text">FOTO</div>
+                              <span class="icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="2em" height="2em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15V3m0 12l-4-4m4 4l4-4M2 17l.621 2.485A2 2 0 0 0 4.561 21h14.878a2 2 0 0 0 1.94-1.515L22 17"></path></svg>
+                              </span>
+                            </div>
+                          </div>
+                        <button class="flip-card__btn">Imprimir</button>
+                     </form>
+                  </div>
+                  <div class="flip-card__back">
+                     <div class="title">Cartão comum</div>
+                     <form class="flip-card__form" action="">
+                        <input class="flip-card__input" placeholder="Nome" type="name">
+                        <input class="flip-card__input" name="CPF" placeholder="CPF" type="text" id="cpf" maxlength="11">
+                        <div class="button" data-tooltip="Size: 20Mb">
+                          <div class="button-wrapper">
+                            <div class="text">FOTO</div>
+                              <span class="icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="2em" height="2em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15V3m0 12l-4-4m4 4l4-4M2 17l.621 2.485A2 2 0 0 0 4.561 21h14.878a2 2 0 0 0 1.94-1.515L22 17"></path></svg>
+                              </span>
+                            </div>
+                          </div>
+                           <div class="custom-radio">
+                             <input type="radio" id="radio-1" name="tabs" checked="">
+                             <label class="radio-label" for="radio-1">
+                               <div class="radio-circle"></div>
+                               <span class="radio-text">VT</span>
+                             </label>
+                             <input type="radio" id="radio-2" name="tabs">
+                             <label class="radio-label" for="radio-2">
+                               <div class="radio-circle"></div>
+                               <span class="radio-text">Estudante</span>
+                             </label>
+                             <input type="radio" id="radio-3" name="tabs">
+                             <label class="radio-label" for="radio-3">
+                               <div class="radio-circle"></div>
+                               <span class="radio-text">Passe Social</span>
+                             </label>
+                             <input type="radio" id="radio-4" name="tabs">
+                             <label class="radio-label" for="radio-4">
+                               <div class="radio-circle"></div>
+                               <span class="radio-text">Gratuidade</span>
+                             </label>
+                           </div>
+                         </>
+                        <button class="flip-card__btn">Imprimir</button>
+                     </form>
+                  </div>
+               </div>
+            </label>
+        </div>   
+    </div>
+    <script>
+      let printCount = 0;
+      let contagemCartao = {
+        vt : 0,
+        gratuito: 0,
+        estudante: 0,
+        passe_social: 0
+      };
+
+      function contagemImpressao(opcao){
+        if(contagemCartao.hasOwnProperty(opcao)){
+          contagemCartao[opcao]++;
+        }
+      }
+
+      contagemCartao("vt");
+      contagemCartao("gratuito");
+      contagemCartao("estudante");
+      contagemCartao("passe_social")
+
+      function Contagem(){
+        console.log("Contagem das Opções:");
+        for (let opcao in contagemOpcoes) {
+            console.log(`${opcao}: ${contagemCartao[opcao]}`);
+        }
+      }
+
+
+      document.addEventListener('DOMContentLoaded', (event) => {
+          const printButtons = document.querySelectorAll('.flip-card__btn');
+
+          printButtons.forEach(button => {
+              button.addEventListener('click', (e) => {
+                  e.preventDefault();
+                  printCount++;
+                  document.getElementById('printCount').innerText = 'Contagem de Impressões: ' + printCount;
+                  window.print();
+              });
+          });
+      });
+
+      //cpf
+      document.addEventListener('DOMContentLoaded', () => {
+         const cpf = document.getElementById("cpf");
+      
+         if (cpf) {
+             cpf.addEventListener("change", () => {
+                 let value = cpf.value.replace(/\D/g, ''); // Remove qualquer coisa que não seja dígito
+                 value = value.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4'); // Formata como CPF
+                 cpf.value = value;
+             });
+         }
+     });
+
+     //buscador de arquivo
+
+    
+
+     //botão
+
+     document.addEventListener('DOMContentLoaded', () => {
+      const button = document.querySelector('.button'); // Seleciona o botão
+      const slider = document.querySelector('.slider'); // Seleciona o slider
+  
+      button.addEventListener('click', () => {
+          slider.classList.toggle('flipped'); // Alterna a classe 'flipped' no slider
+      });
+  });
+  
+  
+  </script>
+</body>
+</html>
